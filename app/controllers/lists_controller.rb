@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
 
-  before_action :set_list, only: [:show]
+  before_action :set_list, only: [:show, :add_item]
 
   def show
   end 
@@ -15,6 +15,11 @@ class ListsController < ApplicationController
 
   def create
     @list = List.create(list_params)
+    redirect_to list_path @list
+  end
+
+  def add_item
+    @list.add_item Item.find(params[:item])
     redirect_to list_path @list
   end
 

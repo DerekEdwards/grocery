@@ -1,7 +1,7 @@
 %h1
   =@list.name
 
--@list.locations.each do |loc|
+-@list.locations.by_order.uniq.each do |loc|
   -if loc.description
     %h4="#{loc.name}: #{loc.description}"
   -else
@@ -11,3 +11,9 @@
     =item.name
     %br
   %hr
+
+
+%h3 Add to this list
+-Item.all.each do |item|
+  =link_to "#{item.name}", add_item_list_path(@list, item: item)
+  %br
