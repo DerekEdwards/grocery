@@ -1,0 +1,13 @@
+%h1
+  =@list.name
+
+-@list.locations.each do |loc|
+  -if loc.description
+    %h4="#{loc.name}: #{loc.description}"
+  -else
+    %h4=loc.name
+  %br
+  -@list.items.where(location: loc).each do |item|
+    =item.name
+    %br
+  %hr
