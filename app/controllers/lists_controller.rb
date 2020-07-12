@@ -9,14 +9,23 @@ class ListsController < ApplicationController
     @lists = List.active 
   end
 
+  def new
+    @list = List.new 
+  end
+
+  def create
+    @list = List.create(list_params)
+    redirect_to list_path @list
+  end
+
   private
 
   def set_list
     @list = List.find(params[:id])
   end
 
-  #def block_params
-  #  params.require(:block).permit(:name, :description, :polyline, :neighborhood_id)
-  #end
+  def list_params
+    params.require(:list).permit(:name)
+  end
 
 end

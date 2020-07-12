@@ -37,6 +37,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'rb-readline'
 gem 'awesome_print'
 gem 'haml-rails'
+gem 'bootstrap', '~> 4.5.0'
+gem 'jquery-rails'
+gem 'simple_form'
+
+
 
 
 group :development, :test do
