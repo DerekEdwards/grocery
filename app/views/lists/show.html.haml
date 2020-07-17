@@ -29,8 +29,16 @@
                 %button.btn.btn-danger.btn-xs
                   =item.name
               %br
-
-      %hr
+  %br
+  .row
+    .col-md-12
+      %h4
+        Location Unknown
+      -@list.items.where(location: nil).each do |item|
+        =link_to remove_item_list_path(@list, item_id: item), method: :patch do
+          %button.btn.btn-danger.btn-xs
+            =item.name
+  %hr
 
   .row
     %h3 Add to this list
