@@ -4,7 +4,7 @@
       =@list.name
   .row
     -if @list.active
-      =link_to close_list_path(@list), method: :patch do
+      =link_to close_list_path(@list), method: :patch,  data: {confirm: "Are you sure you want to close this list?" } do
         %button.btn.btn-danger.btn-xs
           Close
 
@@ -20,12 +20,23 @@
         %h4=loc.name
       %br
       -@list.items.where(location: loc).each do |item|
-        =item.name
+        =link_to remove_item_list_path(@list, item_id: item), method: :patch do
+          %button.btn.btn-danger.btn-xs
+            =item.name
         %br
+
       %hr
 
   .row
     %h3 Add to this list
-    -Item.all.order(:name).each do |item|
-      =link_to "#{item.name}", add_item_list_path(@list, item: item)
+    -Item.all.order(:name).each_slice(12) do |items|
+      .row
+        -items.each do |item|
+          .col-md-1
+            -if item.in? @list.items
+              =item.name
+            -else
+              =link_to add_item_list_path(@list, item: item), method: :get do
+                %button.btn.btn-primary.btn-sm
+                  =item.name
       %br

@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
 
-  before_action :set_list, only: [:show, :add_item, :close]
+  before_action :set_list, only: [:show, :add_item, :close, :remove_item]
 
   def show
   end 
@@ -27,6 +27,12 @@ class ListsController < ApplicationController
     @list.active = false
     @list.save
     redirect_to root_path
+  end
+
+  def remove_item
+    item = Item.find(params[:item_id])
+    @list.items.delete(item)
+    redirect_to list_path @list
   end
 
   private

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do 
       get 'add_item'
       patch 'close'
+      patch 'remove_item'
     end
   end
 
