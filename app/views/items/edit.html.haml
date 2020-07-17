@@ -1,0 +1,11 @@
+.div.text-center
+  %h3
+    ="Edit #{@item.name}"
+
+  =simple_form_for @item, url: item_path(@item), method: :patch do |f|
+    .col-md-4
+    .col-md-4
+      .row
+        =f.input :name
+        =f.input :location, collection: @locations, include_blank: false, selected: @item.location.try(:id)
+        =f.submit 
