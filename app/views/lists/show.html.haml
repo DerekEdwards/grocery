@@ -13,17 +13,22 @@
     %hr
 
   .row
-    -@list.locations.by_order.uniq.each do |loc|
-      -if loc.description
-        %h4="#{loc.name}: #{loc.description}"
-      -else
-        %h4=loc.name
-      %br
-      -@list.items.where(location: loc).each do |item|
-        =link_to remove_item_list_path(@list, item_id: item), method: :patch do
-          %button.btn.btn-danger.btn-xs
-            =item.name
-        %br
+    -@list.locations.by_order.uniq.each_slice(3) do |locs|
+      .row
+        -locs.each do |loc|
+          .col-md-4
+            // TITLE OF LOCATION 
+            -if loc.description
+              %h4="#{loc.name}: #{loc.description}"
+            -else
+              %h4=loc.name
+            %br
+            // Items at this location
+            -@list.items.where(location: loc).each do |item|
+              =link_to remove_item_list_path(@list, item_id: item), method: :patch do
+                %button.btn.btn-danger.btn-xs
+                  =item.name
+              %br
 
       %hr
 
