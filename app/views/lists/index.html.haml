@@ -1,14 +1,17 @@
-%h1
-  Surviving Shaws
-Abandon all hope, ye who enter here. 
-%br
-  =image_tag("shaws.jpg")
+.div.text-center
+  .row
+    %h1
+      Surviving Shaws
+    Abandon all hope, ye who enter here. 
+  .row 
+    =image_tag("shaws.jpg")
 
-%h3 Shopping Lists
--@lists.each do |list|
-  =link_to "#{list.name}", list_path(list)
-  %br
+  .row
+    %h3 Shopping Lists
+    -@lists.each do |list|
+      %h4
+        =link_to "#{list.name}", list_path(list)
+        %br
 
-
-%br
-=link_to "+Make a New List", new_list_path 
+  .row 
+    =link_to "Make a New List", new_list_path, class: "btn btn-primary"

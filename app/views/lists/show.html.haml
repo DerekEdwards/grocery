@@ -1,5 +1,11 @@
 %h1
   =@list.name
+-if @list.active
+  'Close Button'
+-else 
+  Closed
+
+%br
 
 -@list.locations.by_order.uniq.each do |loc|
   -if loc.description
