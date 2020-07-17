@@ -1,25 +1,31 @@
-%h1
-  =@list.name
--if @list.active
-  'Close Button'
--else 
-  Closed
+.div.text-center
+  .row
+    %h1
+      =@list.name
+  .row
+    -if @list.active
+      =link_to close_list_path(@list), method: :patch do
+        %button.btn.btn-danger.btn-xs
+          Close
 
-%br
+    -else 
+      Closed
+    %hr
 
--@list.locations.by_order.uniq.each do |loc|
-  -if loc.description
-    %h4="#{loc.name}: #{loc.description}"
-  -else
-    %h4=loc.name
-  %br
-  -@list.items.where(location: loc).each do |item|
-    =item.name
-    %br
-  %hr
+  .row
+    -@list.locations.by_order.uniq.each do |loc|
+      -if loc.description
+        %h4="#{loc.name}: #{loc.description}"
+      -else
+        %h4=loc.name
+      %br
+      -@list.items.where(location: loc).each do |item|
+        =item.name
+        %br
+      %hr
 
-
-%h3 Add to this list
--Item.all.order(:name).each do |item|
-  =link_to "#{item.name}", add_item_list_path(@list, item: item)
-  %br
+  .row
+    %h3 Add to this list
+    -Item.all.order(:name).each do |item|
+      =link_to "#{item.name}", add_item_list_path(@list, item: item)
+      %br

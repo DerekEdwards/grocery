@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :lists do
     member do 
       get 'add_item'
+      patch 'close'
     end
   end
 
 end
+

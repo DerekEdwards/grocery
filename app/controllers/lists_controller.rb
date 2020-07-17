@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
 
-  before_action :set_list, only: [:show, :add_item]
+  before_action :set_list, only: [:show, :add_item, :close]
 
   def show
   end 
@@ -21,6 +21,12 @@ class ListsController < ApplicationController
   def add_item
     @list.add_item Item.find(params[:item])
     redirect_to list_path @list
+  end
+
+  def close
+    @list.active = false
+    @list.save
+    redirect_to root_path
   end
 
   private
