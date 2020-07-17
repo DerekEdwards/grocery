@@ -22,7 +22,6 @@
               %h4="#{loc.name}: #{loc.description}"
             -else
               %h4=loc.name
-            %br
             // Items at this location
             -@list.items.where(location: loc).each do |item|
               =link_to remove_item_list_path(@list, item_id: item), method: :patch do
