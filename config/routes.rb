@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'add_item'
       patch 'close'
       patch 'remove_item'
+      get 'print_view'
     end
   end
 

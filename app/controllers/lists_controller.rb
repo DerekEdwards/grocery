@@ -1,9 +1,12 @@
 class ListsController < ApplicationController
 
-  before_action :set_list, only: [:show, :add_item, :close, :remove_item]
+  before_action :set_list, only: [:show, :print_view, :add_item, :close, :remove_item]
 
   def show
   end 
+
+  def print_view
+  end
 
   def index
     @lists = List.active 
