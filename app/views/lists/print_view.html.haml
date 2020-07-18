@@ -16,7 +16,7 @@
     %hr
   .row
   %table{border: 0, style: 'valign: top'}
-    -@list.locations.by_order.uniq.each_slice(5) do |locs|
+    -@list.locations.by_order.uniq.each_slice(4) do |locs|
       %tr
         -locs.each do |loc|
           %td
