@@ -7,6 +7,9 @@
       =link_to close_list_path(@list), method: :patch,  data: {confirm: "Are you sure you want to close this list?" } do
         %button.btn.btn-danger.btn-xs
           Close
+      =link_to print_view_list_path(@list), method: :get, target: :_blank do
+        %button.btn.btn-info.btn-xs
+          Print
 
     -else 
       Closed
