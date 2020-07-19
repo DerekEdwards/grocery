@@ -1,0 +1,10 @@
+.div.text-center
+  %h3
+    ="Edit note for #{@list_item.item.name}"
+
+  =simple_form_for @list_item, url: list_item_path(@list_item), method: :patch do |f|
+    .col-md-4
+    .col-md-4
+      .row
+        =f.input :note
+        =f.button :submit, "Set Note"

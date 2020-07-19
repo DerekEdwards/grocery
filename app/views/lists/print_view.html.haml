@@ -7,12 +7,17 @@
     %h4
       Location Unknown
     -i=1
-    -@list.items.where(location: nil).each do |item|
-      -if i == @list.items.where(location: nil).count
-        ="#{item.name}"
+    -@list.list_items.at_location(nil).each do |list_item|
+      -if i == @list.list_items.at_location(nil).count
+        ="#{list_item.item.name}"
+        -if list_item.note?
+          ="(#{list_item.note})"
       -else
         -i+=1
-        ="#{item.name}, "
+        ="#{list_item.item.name}"
+        -if list_item.note?
+          ="(#{list_item.note})"
+        =", "
     %hr
   .row
   %table{border: 0, style: 'valign: top'}
@@ -23,13 +28,15 @@
             // TITLE OF LOCATION 
             -if loc.description
               %h4=loc.name
-              ="(#{loc.description})"
+              %strong="(#{loc.description})"
               %br
             -else
               %h4=loc.name
             // Items at this location
-            -@list.items.where(location: loc).each do |item|
-              =item.name
+            -@list.list_items.at_location(loc).each do |list_item|
+              =list_item.item.name.strip
+              -if list_item.note?
+                ="(#{list_item.note})"
               %br
 
 :javascript

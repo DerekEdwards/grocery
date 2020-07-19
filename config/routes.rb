@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :locations, only: [:new, :create, :index, :edit, :update]
   resources :items, only: [:new, :create, :index, :edit, :update]
+  resources :list_items, only: [:edit, :update]
 
 end
 

@@ -1,0 +1,12 @@
+=link_to remove_item_list_path(list_item.list, item_id: list_item.item), method: :patch do
+  %i.fa.fa-times-circle
+
+=list_item.item.name
+-if not list_item.note.blank?
+  =link_to edit_list_item_path list_item do
+    %i.fa.fa-sticky-note
+-else
+  =list_item.item.name
+  =link_to edit_list_item_path list_item do
+    %i.fa.fa-sticky-note-o
+%br

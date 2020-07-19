@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200719185911) do
+ActiveRecord::Schema.define(version: 20200719192127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20200719185911) do
     t.bigint "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "note"
     t.index ["item_id"], name: "index_list_items_on_item_id"
     t.index ["list_id"], name: "index_list_items_on_list_id"
   end

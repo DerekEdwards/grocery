@@ -6,10 +6,13 @@
     -if @list.active
       =link_to close_list_path(@list), method: :patch,  data: {confirm: "Are you sure you want to close this list?" } do
         %button.btn.btn-danger.btn-xs
+          %i.fa.fa-trash
           Close
       =link_to print_view_list_path(@list), method: :get, target: :_blank do
         %button.btn.btn-info.btn-xs
+          %i.fa.fa-print
           Print
+
 
     -else 
       Closed
@@ -26,11 +29,9 @@
             -else
               %h4=loc.name
             // Items at this location
-            -@list.items.where(location: loc).each do |item|
-              =link_to remove_item_list_path(@list, item_id: item), method: :patch do
-                %button.btn.btn-danger.btn-xs
-                  =item.name
-              %br
+            -@list.list_items.at_location(loc).each do |list_item|
+              =render partial: 'shared/listed_item', locals: {list_item: list_item}
+
       %hr
             
   %br
@@ -38,10 +39,9 @@
     .col-md-12
       %h4
         Location Unknown
-      -@list.items.where(location: nil).each do |item|
-        =link_to remove_item_list_path(@list, item_id: item), method: :patch do
-          %button.btn.btn-danger.btn-xs
-            =item.name
+      // Items at this location
+      -@list.list_items.at_location(nil).each do |list_item|
+        =render partial: 'shared/listed_item', locals: {list_item: list_item}
   %hr
 
   .row
