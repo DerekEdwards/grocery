@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new 
-    @locations = Location.all.map{ |x| [x.name, x.id] }
+    @locations = Location.all.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
   end
 
@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
 
 
   def edit
-    @locations = Location.all.map{ |x| [x.name, x.id] }
+    @locations = Location.all.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
   end
 
