@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :locations, only: [:new, :create, :index, :edit, :update]
   resources :items, only: [:new, :create, :index, :edit, :update]
 
 end

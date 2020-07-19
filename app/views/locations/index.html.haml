@@ -1,0 +1,15 @@
+.div.text-center
+  %h3 Locations
+  -@locations.each_slice(6) do |locs|
+    .row
+      -locs.each do |loc|
+        .col-md-2
+          %h4
+            =link_to "#{loc.name}", edit_location_path(loc)
+          %h5
+            =loc.description
+          =loc.order
+  %hr
+  .row
+    =link_to "Create a new location", new_location_path, class: "btn btn-primary"
+      

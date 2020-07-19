@@ -1,0 +1,11 @@
+.div.text-center
+  %h3 Create a new location
+
+  =simple_form_for @location, url: locations_path do |f|
+    .col-md-4
+    .col-md-4
+      .row
+        =f.input :name
+        =f.input :description
+        =f.input :order
+        =f.submit 
