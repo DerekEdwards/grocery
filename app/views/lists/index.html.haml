@@ -10,6 +10,7 @@
     %h3 Shopping Lists
     -@lists.each do |list|
       %h4
+        %i.fa.fa-shopping-cart
         =link_to "#{list.name}", list_path(list)
         %br
   %br
@@ -17,8 +18,3 @@
     =link_to "Make a New List", new_list_path, class: "btn btn-primary"
 
   %br
-  %br
-  %hr
-    =link_to "Inventory", items_path
-    |
-    =link_to "Locations", locations_path
