@@ -36,6 +36,12 @@ class ItemsController < ApplicationController
     @locations = [['Unknown', nil]] + @locations
   end
 
+  def search
+    search_string = allowed_params[:search_string]
+    response = Item.search search_string
+    render json: response
+  end
+
   private
 
   def set_item
@@ -44,6 +50,10 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :location, :list)
+  end
+
+  def allowed_params
+    params.permit(:search_string)
   end
 
 end

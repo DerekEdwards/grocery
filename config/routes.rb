@@ -14,7 +14,14 @@ Rails.application.routes.draw do
   end
 
   resources :locations, only: [:new, :create, :index, :edit, :update]
+  
   resources :items, only: [:new, :create, :index, :edit, :update]
+  resources :items do
+    collection do 
+      get 'search'
+    end
+  end
+
   resources :list_items, only: [:edit, :update]
 
 end
