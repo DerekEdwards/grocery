@@ -13,4 +13,10 @@ class Item < ApplicationRecord
     end
   end
 
+  def self.search search_string
+    search_string = "%#{search_string}%"
+    query = Item.arel_table[:name].matches(search_string)
+    Item.where(query)
+  end
+
 end
