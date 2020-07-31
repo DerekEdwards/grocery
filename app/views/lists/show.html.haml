@@ -19,41 +19,97 @@
     %hr
 
   .row
-    -@list.locations.by_order.uniq.each_slice(3) do |locs|
-      .row
-        -locs.each do |loc|
-          .col-md-4
-            // TITLE OF LOCATION 
-            -if loc.description
-              %h4="#{loc.name}: #{loc.description}"
-            -else
-              %h4=loc.name
-            // Items at this location
-            -@list.list_items.at_location(loc).each do |list_item|
-              =render partial: 'shared/listed_item', locals: {list_item: list_item}
+    .col-md-9
+      -@list.locations.by_order.uniq.each_slice(3) do |locs|
+        .row
+          -locs.each do |loc|
+            .col-md-4
+              // TITLE OF LOCATION 
+              -if loc.description
+                %h4="#{loc.name}: #{loc.description}"
+              -else
+                %h4=loc.name
+              // Items at this location
+              -@list.list_items.at_location(loc).each do |list_item|
+                =render partial: 'shared/listed_item', locals: {list_item: list_item}
 
-      %hr
-            
-  %br
-  .row
-    .col-md-12
-      %h4
-        Location Unknown
-      // Items at this location
-      -@list.list_items.at_location(nil).each do |list_item|
-        =render partial: 'shared/listed_item', locals: {list_item: list_item}
-  %hr
-
-  .row
-    %h3 Add to this list
-    -Item.all.order(:name).each_slice(12) do |items|
-      .row
-        -items.each do |item|
-          .col-md-1
-            -if item.in? @list.items
-              =item.name
-            -else
-              =link_to add_item_list_path(@list, item: item), method: :get do
-                %button.btn.btn-primary.btn-sm
-                  =item.name
+                
       %br
+      .row
+        .col-md-12
+          %h4
+            Location Unknown
+          // Items at this location
+          -@list.list_items.at_location(nil).each do |list_item|
+            =render partial: 'shared/listed_item', locals: {list_item: list_item}
+    .col-md-3
+      .row.text-center
+        .col-md-1
+        .col-md-10
+          %input#myInput{onkeyup: "myFunction()", placeholder: "Search . . .", type: "text"}/
+      .row 
+        .col-md-1
+        .col-md-10
+          %ul#myUL
+            -Item.all.order(:name).each do |item|
+              -if item.in? @list.items 
+                =content_tag(:li, "data-name": item.name) do 
+                  =item.name
+              -else
+                =content_tag(:li, "data-name": item.name) do 
+                  %a{href: add_item_list_path(@list, item: item)} 
+                    =item.name
+
+
+:css 
+
+  #myInput {
+    width: 80%; 
+    font-size: 16px; /* Increase font-size */
+    padding: 10px 10px 10px 10px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+  }
+
+  #myUL {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #myUL li a {
+    border: 1px solid #ddd; /* Add a border to all links */
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #23C12F; 
+    padding: 8px; /* Add some padding */
+    text-decoration: none; /* Remove default text underline */
+    font-size: 18px; /* Increase the font-size */
+    color: black; /* Add a black text color */
+    display: block; /* Make it into a block element to fill the whole list */
+  }
+
+  #myUL li a:hover:not(.header) {
+    background-color: #39F026; /* Add a hover effect to all links, except for headers */
+  }
+
+:javascript
+  function myFunction() {
+    // Declare variables
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+      txtValue = li[i].dataset.name;
+      //txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+      } else {
+        li[i].style.display = "none";
+      }
+    }
+  }
