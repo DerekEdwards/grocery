@@ -35,13 +35,14 @@
 
                 
       %br
-      .row
-        .col-md-12
-          %h4
-            Location Unknown
-          // Items at this location
-          -@list.list_items.at_location(nil).each do |list_item|
-            =render partial: 'shared/listed_item', locals: {list_item: list_item}
+      -if @list.list_items.at_location(nil).count > 0
+        .row
+          .col-md-12
+            %h4
+              Location Unknown
+            // Items at this location
+            -@list.list_items.at_location(nil).each do |list_item|
+              =render partial: 'shared/listed_item', locals: {list_item: list_item}
     .col-md-3
       .row.text-center
         .col-md-1

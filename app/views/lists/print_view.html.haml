@@ -3,22 +3,23 @@
     %h3
       =@list.name
     %hr
-  .row
-    %h4
-      Location Unknown
-    -i=1
-    -@list.list_items.at_location(nil).each do |list_item|
-      -if i == @list.list_items.at_location(nil).count
-        ="#{list_item.item.name}"
-        -if list_item.note?
-          ="(#{list_item.note})"
-      -else
-        -i+=1
-        ="#{list_item.item.name}"
-        -if list_item.note?
-          ="(#{list_item.note})"
-        =", "
-    %hr
+  -if @list.list_items.at_location(nil).count > 0
+    .row
+      %h4
+        Location Unknown
+      -i=1
+      -@list.list_items.at_location(nil).each do |list_item|
+        -if i == @list.list_items.at_location(nil).count
+          ="#{list_item.item.name}"
+          -if list_item.note?
+            ="(#{list_item.note})"
+        -else
+          -i+=1
+          ="#{list_item.item.name}"
+          -if list_item.note?
+            ="(#{list_item.note})"
+          =", "
+      %hr
   .row
   %table{border: 0, style: 'valign: top'}
     -@list.locations.by_order.uniq.each_slice(4) do |locs|
