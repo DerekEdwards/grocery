@@ -27,7 +27,7 @@
         -locs.each do |loc|
           %td
             // TITLE OF LOCATION 
-            -if loc.description
+            -unless loc.description.blank?
               %h4=loc.name
               %strong="(#{loc.description})"
               %br
