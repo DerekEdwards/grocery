@@ -61,6 +61,12 @@
                 =content_tag(:li, "data-name": item.name) do 
                   %a{href: add_item_list_path(@list, item: item)} 
                     =item.name
+      .row
+        %br
+        =link_to new_item_path, target: "_blank", class: "btn btn-primary" do 
+          %i.fa.fa-plus
+          ="Add Item"
+      
 
 
 :css 
