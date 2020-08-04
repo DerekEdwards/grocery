@@ -19,4 +19,10 @@ class Item < ApplicationRecord
     Item.where(query)
   end
 
+  def self.topX num=10
+    recent_lists = List.most_recent.limit(10)
+    item_ids = ListItem.where(list: recent_lists).group('item_id').order('count(*)').limit(num).pluck(:item_id).reverse
+    Item.where(id: item_ids).sort_by { |u| item_ids.index(u.id) }
+  end
+
 end

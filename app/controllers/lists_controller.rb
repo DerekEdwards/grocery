@@ -3,6 +3,7 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show, :print_view, :add_item, :close, :remove_item]
 
   def show
+    @top_10 = Item.topX(10)
   end 
 
   def print_view
