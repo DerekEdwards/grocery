@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
     @item = Item.new 
     @locations = Location.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
-    @placeholder = allowed_params[:placeholder]
+    @placeholder = (allowed_params[:placeholder] || "").titleize
     @list_id = allowed_params[:list_id]    
   end
 
