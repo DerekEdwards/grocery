@@ -6,6 +6,8 @@ class ItemsController < ApplicationController
     @item = Item.new 
     @locations = Location.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
+    @placeholder = allowed_params[:placeholder]
+    @list_id = allowed_params[:list_id]    
   end
 
   def create
@@ -15,7 +17,15 @@ class ItemsController < ApplicationController
       @item.location = Location.find(item_params[:location])
     end
     @item.save
-    redirect_to items_path
+    
+    list_id = allowed_params[:list_id]
+    if list_id 
+      list = List.find(list_id)
+      list.add_item @item
+      redirect_to list_path(list_id)
+    else
+      redirect_to items_path
+    end
   end
 
   def index
@@ -60,7 +70,7 @@ class ItemsController < ApplicationController
   end
 
   def allowed_params
-    params.permit(:search_string)
+    params.permit(:search_string, :placeholder, :list_id)
   end
 
 end

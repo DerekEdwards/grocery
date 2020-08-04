@@ -48,7 +48,7 @@
       .row.text-center
         .col-md-1
         .col-md-10
-          %input#myInput{onkeyup: "myFunction()", placeholder: "Search . . .", type: "text"}/
+          %input#myInput{onkeyup: "filter()", placeholder: "Search . . .", type: "text"}/
       .row 
         .col-md-1
         .col-md-10
@@ -71,7 +71,8 @@
                       =item.name
       .row
         %br
-        =link_to new_item_path, target: "_blank", class: "btn btn-primary" do 
+        //=link_to new_item_path(list_id: @list.id, placeholder: 'test'), class: "btn btn-primary" do 
+        =link_to "javascript:goToAddItem(#{@list.id})", class: 'btn btn-primary' do
           %i.fa.fa-plus
           ="Add Item"
       
@@ -110,7 +111,7 @@
   }
 
 :javascript
-  function myFunction() {
+  function filter() {
     // Declare variables
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById('myInput');
@@ -128,4 +129,12 @@
         li[i].style.display = "none";
       }
     }
+  }
+
+  // Go to Create a new item page, set placeholder for name, and prepare to link back to this list.
+  function goToAddItem(listId) {
+    var placeholder;
+    placeholder = document.getElementById('myInput').value;
+    url = '/items/new?list_id=' + listId + '&placeholder=' + placeholder;
+    window.location.href = url;
   }
