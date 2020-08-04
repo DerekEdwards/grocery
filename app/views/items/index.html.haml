@@ -1,6 +1,6 @@
 .div.text-center
   %h3 Inventory
-  -Item.all.order(:name).each_slice(12) do |items|
+  -@items.order(:name).each_slice(12) do |items|
     .row
       -items.each do |item|
         .col-md-1

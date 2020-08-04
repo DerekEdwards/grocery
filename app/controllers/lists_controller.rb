@@ -4,6 +4,7 @@ class ListsController < ApplicationController
 
   def show
     @top_10 = Item.topX(10)
+    @items = Item.active
   end 
 
   def print_view

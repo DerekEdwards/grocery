@@ -53,7 +53,7 @@
         .col-md-1
         .col-md-10
           %ul#myUL
-            -Item.all.order(:name).each do |item|
+            -@items.order(:name).each do |item|
               -if item.in? @list.items 
                 =content_tag(:li, "data-name": item.name) do 
                   -if item.in? @top_10

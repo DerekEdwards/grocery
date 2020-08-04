@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     collection do 
       get 'search'
     end
+    member do 
+      patch 'deactivate'
+    end
   end
 
   resources :list_items, only: [:edit, :update]

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
 
-  before_action :set_item, only: [:edit, :update]
+  before_action :set_item, only: [:edit, :update, :deactivate]
 
   def new
     @item = Item.new 
@@ -19,6 +19,7 @@ class ItemsController < ApplicationController
   end
 
   def index
+    @items = Item.active
   end
 
   def update
@@ -40,6 +41,12 @@ class ItemsController < ApplicationController
     search_string = allowed_params[:search_string]
     response = Item.search search_string
     render json: response
+  end
+
+  def deactivate
+    @item.active = false
+    @item.save
+    redirect_to items_path
   end
 
   private

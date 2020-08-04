@@ -4,6 +4,7 @@ class Item < ApplicationRecord
   belongs_to :location, optional: true
 
   scope :at_location, ->(location) { where(location: location) }
+  scope :active, -> { where(active: true) }
 
   def to_s
     if name.blank?
