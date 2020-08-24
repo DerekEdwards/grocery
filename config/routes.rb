@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :stores, only: [:new, :create, :index, :edit, :update]
+
   resources :list_items, only: [:edit, :update]
 
 end

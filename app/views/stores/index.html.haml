@@ -1,0 +1,11 @@
+.div.text-center
+  %h3 Stores
+  -@stores.each_slice(3) do |stores|
+    .row
+      -stores.each do |store|
+        .col-md-4
+          %h4
+            =link_to "#{store.name}", edit_store_path(store)
+    %hr
+  .row
+    =link_to "Create a new store", new_store_path, class: "btn btn-primary"

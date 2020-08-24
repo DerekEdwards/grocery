@@ -1,0 +1,10 @@
+.div.text-center
+  %h3
+    ="Edit #{@store.name}"
+
+  =simple_form_for @store, url: store_path(@store), method: :patch do |f|
+    .col-md-4
+    .col-md-4
+      .row
+        =f.input :name
+        =f.submit 
