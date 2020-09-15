@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
 
-  before_action :set_store, only: [:edit, :update]
+  before_action :set_store, only: [:edit, :update, :make_current]
 
   def new
     @store = Store.new 
@@ -21,6 +21,11 @@ class StoresController < ApplicationController
   end
 
   def edit
+  end
+
+  def make_current
+    @store.make_current
+    redirect_back(fallback_location: root_path)
   end
 
   private
