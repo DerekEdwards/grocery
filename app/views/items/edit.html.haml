@@ -8,8 +8,10 @@
       .col-md-4
         .row
           =f.input :name
-          =f.input :location, collection: @locations, include_blank: false, selected: @item.location.try(:id)
+          //= simple_fields_for :other do |o|
+          = f.input :tmp_location, collection: @locations, include_blank: false, selected: @item.get_location(@current_store).try(:id)
           =f.submit 
+
 
   .row
     %hr

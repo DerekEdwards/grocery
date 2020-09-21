@@ -34,16 +34,26 @@ class ItemsController < ApplicationController
 
   def update
     @item.name = item_params[:name]
-    unless item_params[:location].blank?
-      @item.location = Location.find(item_params[:location])
+    
+    #Update the location
+    tmp_location_id = item_params[:tmp_location]
+    unless tmp_location_id.blank?
+      location = Location.find(tmp_location_id)
+      @item.set_location(location) 
+    else
+      @item.unset_location @current_store
     end
+    
+    #unless item_params[:location].blank?
+    #  @item.location = Location.find(item_params[:location])
+    #end
     @item.save
     redirect_to items_path
   end
 
 
   def edit
-    @locations = Location.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
+    @locations = Location.where(store: @current_store).by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
   end
 
@@ -66,7 +76,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :location, :list)
+    params.require(:item).permit(:name, :location, :list, :tmp_location)
   end
 
   def allowed_params

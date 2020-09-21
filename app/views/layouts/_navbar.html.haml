@@ -13,9 +13,9 @@
       %li
         .dropdown
           %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
-            =Store.current_store
+            =@current_store
           %ul.dropdown-menu
             -Store.all.each do |store|
-              -unless store == Store.current_store
+              -unless store == @current_store
                 %li              
                   =link_to store, make_current_store_path(store)

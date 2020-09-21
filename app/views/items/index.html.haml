@@ -6,7 +6,7 @@
         .col-md-1
           %h4
             =link_to "#{item.to_s}", edit_item_path(item)
-          =item.location.try(:name) 
+          =item.get_location(@current_store).try(:name) 
     %hr
   .row
     =link_to "Create a new item", new_item_path, class: "btn btn-primary"
