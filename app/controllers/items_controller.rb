@@ -13,9 +13,16 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new
     @item.name = item_params[:name]
-    unless item_params[:location].blank?
-      @item.location = Location.find(item_params[:location])
+
+    #Update the location
+    tmp_location_id = item_params[:tmp_location]
+    unless tmp_location_id.blank?
+      location = Location.find(tmp_location_id)
+      @item.set_location(location) 
+    else
+      @item.unset_location @current_store
     end
+
     @item.save
     
     list_id = allowed_params[:list_id]
@@ -44,9 +51,6 @@ class ItemsController < ApplicationController
       @item.unset_location @current_store
     end
     
-    #unless item_params[:location].blank?
-    #  @item.location = Location.find(item_params[:location])
-    #end
     @item.save
     redirect_to items_path
   end
