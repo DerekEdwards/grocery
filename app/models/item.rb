@@ -4,9 +4,6 @@ class Item < ApplicationRecord
   has_many :item_locations
   has_many :locations, through: :item_locations
 
-  #DEREK 
-  scope :at_location, ->(location) { where(location: location) }
-
   scope :active, -> { where(active: true) }
 
   def to_s

@@ -30,7 +30,8 @@
               -else
                 %h4=loc.name
               // Items at this location
-              -@list.list_items.at_location(loc).each do |list_item|
+              -@list.item_locations.at_location(loc).each do |item_location|
+                -list_item = ListItem.find_by(item: item_location.item, list: @list)
                 =render partial: 'shared/listed_item', locals: {list_item: list_item}
         %hr
 
