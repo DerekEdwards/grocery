@@ -1,13 +1,18 @@
 .div.text-center
   %h3 Inventory
-  -@items.order(:name).each_slice(12) do |items|
-    .row
-      -items.each do |item|
-        .col-md-1
-          %h4
-            =link_to "#{item.to_s}", edit_item_path(item)
-          =item.location.try(:name) 
-    %hr
+  .row 
+    .col-md-2
+    .col-md-8
+      =column_chart ListItem.group(:item).order('count(*) DESC').limit(25).count.map{ |a| [a[0].name, a[1]]}
+  %br
+  .row
+    -@items.order(:name).each_slice(12) do |items|
+      .row
+        -items.each do |item|
+          .col-md-1
+            %h4
+              =link_to "#{item.to_s}", edit_item_path(item)
+            =item.location.try(:name) 
   .row
     =link_to "Create a new item", new_item_path, class: "btn btn-primary"
       
