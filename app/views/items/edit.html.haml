@@ -11,6 +11,16 @@
           =f.input :location, collection: @locations, include_blank: false, selected: @item.location.try(:id)
           =f.submit 
 
+  -if @item.lists.count > 0
+    .row
+      %hr
+      %h4
+        ="#{@item.name} appears on the following shopping lists:"
+      -@item.lists.order(:created_at).each do |list|
+        %i.fa.fa-shopping-cart
+        =link_to "#{list.name}", list_path(list)
+        ="on #{list.created_at.strftime('%b %e, %Y')}"
+        %br
   .row
     %hr
     -if @item.active

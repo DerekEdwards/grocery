@@ -45,36 +45,37 @@
             -@list.list_items.at_location(nil).each do |list_item|
               =render partial: 'shared/listed_item', locals: {list_item: list_item}
     .col-md-3
-      .row.text-center
-        .col-md-1
-        .col-md-10
-          %input#myInput{onkeyup: "filter()", placeholder: "Search . . .", type: "text"}/
-      .row 
-        .col-md-1
-        .col-md-10
-          %ul#myUL
-            -@items.order(:name).each do |item|
-              -if item.in? @list.items 
-                =content_tag(:li, "data-name": item.name) do 
-                  -if item.in? @top_10
-                    %i.fa.fa-fire
-                    =item.name
-                  -else
-                    =item.name
-              -else
-                =content_tag(:li, "data-name": item.name) do 
-                  %a{href: add_item_list_path(@list, item: item)} 
+      -if @list.active
+        .row.text-center
+          .col-md-1
+          .col-md-10
+            %input#myInput{onkeyup: "filter()", placeholder: "Search . . .", type: "text"}/
+        .row 
+          .col-md-1
+          .col-md-10
+            %ul#myUL
+              -@items.order(:name).each do |item|
+                -if item.in? @list.items 
+                  =content_tag(:li, "data-name": item.name) do 
                     -if item.in? @top_10
                       %i.fa.fa-fire
                       =item.name
                     -else
                       =item.name
-      .row
-        %br
-        //=link_to new_item_path(list_id: @list.id, placeholder: 'test'), class: "btn btn-primary" do 
-        =link_to "javascript:goToAddItem(#{@list.id})", class: 'btn btn-primary' do
-          %i.fa.fa-plus
-          ="Add Item"
+                -else
+                  =content_tag(:li, "data-name": item.name) do 
+                    %a{href: add_item_list_path(@list, item: item)} 
+                      -if item.in? @top_10
+                        %i.fa.fa-fire
+                        =item.name
+                      -else
+                        =item.name
+        .row
+          %br
+          //=link_to new_item_path(list_id: @list.id, placeholder: 'test'), class: "btn btn-primary" do 
+          =link_to "javascript:goToAddItem(#{@list.id})", class: 'btn btn-primary' do
+            %i.fa.fa-plus
+            ="Add Item"
       
 
 
