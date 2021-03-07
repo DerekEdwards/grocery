@@ -3,6 +3,7 @@ class LocationsController < ApplicationController
   before_action :set_location, only: [:edit, :update]
 
   def new
+    @stores = Store.all
     @location = Location.new 
   end
 
@@ -21,6 +22,7 @@ class LocationsController < ApplicationController
   end
 
   def edit
+    @stores = Store.all
   end
 
   private
@@ -30,7 +32,7 @@ class LocationsController < ApplicationController
   end
 
   def location_params
-    params.require(:location).permit(:name, :description, :order)
+    params.require(:location).permit(:name, :description, :order, :store_id)
   end
 
 end

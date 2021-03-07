@@ -1,7 +1,14 @@
 .div.text-center
+
   .row
     %h1
       =@list.name
+  .row 
+    .col-md-5
+    .col-md-2
+      =simple_form_for @list, id: 'store_form', url: list_path(@list), method: :patch do |f|
+        =f.input :store_id, collection: Store.all, include_blank: false, selected: @list.store.try(:id), label: false, input_html: {onchange: "this.form.submit()"}
+
   .row
     -if @list.active
       =link_to close_list_path(@list), method: :patch,  data: {confirm: "Are you sure you want to close this list?" } do
@@ -20,29 +27,30 @@
 
   .row
     .col-md-9
-      -@list.locations.by_order.uniq.each_slice(3) do |locs|
+      -@items_at_locs.each_slice(3) do |locs|
         .row
           -locs.each do |loc|
             .col-md-4
               // TITLE OF LOCATION 
-              -if loc.description
-                %h4="#{loc.name}: #{loc.description}"
+              -if loc[:location].description
+                %h4="#{loc[:location].name}: #{loc[:location].description}"
               -else
-                %h4=loc.name
+                %h4=loc[:location].name
               // Items at this location
-              -@list.list_items.at_location(loc).each do |list_item|
+              -loc[:list_items].each do |list_item|
                 =render partial: 'shared/listed_item', locals: {list_item: list_item}
         %hr
 
                 
       %br
-      -if @list.list_items.at_location(nil).count > 0
+      %h3
+      -if @items_without_locs.count > 0
         .row
           .col-md-12
             %h4
               Location Unknown
             // Items at this location
-            -@list.list_items.at_location(nil).each do |list_item|
+            -@items_without_locs.each do |list_item|
               =render partial: 'shared/listed_item', locals: {list_item: list_item}
     .col-md-3
       -if @list.active
@@ -77,7 +85,6 @@
             %i.fa.fa-plus
             ="Add Item"
       
-
 
 :css 
 

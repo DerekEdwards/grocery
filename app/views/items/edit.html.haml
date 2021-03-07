@@ -1,15 +1,32 @@
 .div.text-center
   .row 
     %h3
-      ="Edit #{@item.name}"
+      ="#{@item.name}"
 
     =simple_form_for @item, url: item_path(@item), method: :patch do |f|
       .col-md-4
       .col-md-4
         .row
           =f.input :name
-          =f.input :location, collection: @locations, include_blank: false, selected: @item.location.try(:id)
+          //= simple_fields_for :other do |o|
+          //= f.input :tmp_location, collection: @locations, include_blank: false, selected: @item.get_location(@current_store).try(:id)
           =f.submit 
+
+  .row
+    %hr
+    %h4
+      ="#{@item.name} can be found in the following locations:"  
+    -@item.locations.each do |loc|
+      %i.fa.fa-map-marker
+      =link_to "#{loc.store.name}: #{loc.name}", edit_location_path(loc)
+      =link_to item_location_path(ItemLocation.find_by(item_id: @item.id, location_id: loc.id)), method: :delete, data: {confirm: "Are you sure you want to remove #{@item.name} from #{loc.name}?" } do
+        %i.fa.fa-times-circle
+      %br
+    .row 
+      =link_to new_item_location_path(item_id: @item) do
+        %button.btn.btn-info.btn-xs
+          %i.fa.fa-map-marker
+          Add Location
 
   -if @item.lists.count > 0
     .row

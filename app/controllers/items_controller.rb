@@ -3,19 +3,29 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :deactivate]
 
   def new
+    @list_id = allowed_params[:list_id] 
+    if @list_id
+      list = List.find(@list_id)
+      @locations = list.store.locations.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
+    else
+      @locations = Location.by_order.map{ |x| ["#{x.store.name}, #{x.name}: #{x.description}", x.id] }
+    end
     @item = Item.new 
-    @locations = Location.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
     @placeholder = (allowed_params[:placeholder] || "").titleize
-    @list_id = allowed_params[:list_id]    
   end
 
   def create
     @item = Item.new
     @item.name = item_params[:name]
-    unless item_params[:location].blank?
-      @item.location = Location.find(item_params[:location])
+
+    #Update the location
+    tmp_location_id = item_params[:tmp_location]
+    unless tmp_location_id.blank?
+      location = Location.find(tmp_location_id)
+      @item.set_location(location) 
     end
+
     @item.save
     
     list_id = allowed_params[:list_id]
@@ -34,16 +44,21 @@ class ItemsController < ApplicationController
 
   def update
     @item.name = item_params[:name]
-    unless item_params[:location].blank?
-      @item.location = Location.find(item_params[:location])
+    
+    #Update the location
+    tmp_location_id = item_params[:tmp_location]
+    unless tmp_location_id.blank?
+      location = Location.find(tmp_location_id)
+      @item.set_location(location) 
     end
+    
     @item.save
     redirect_to items_path
   end
 
 
   def edit
-    @locations = Location.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
+    @locations = Location.where(store: @current_store).by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
   end
 
@@ -66,7 +81,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :location, :list)
+    params.require(:item).permit(:name, :location, :list, :tmp_location)
   end
 
   def allowed_params

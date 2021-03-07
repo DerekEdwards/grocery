@@ -8,4 +8,5 @@
         =f.input :name
         =f.input :description
         =f.input :order
+        =f.input :store_id, collection: @stores, include_blank: false, selected: @location.store.try(:id)
         =f.submit 
