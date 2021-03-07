@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
 
-  before_action :set_list, only: [:show, :print_view, :add_item, :close, :remove_item]
+  before_action :set_list, only: [:show, :update, :print_view, :add_item, :close, :remove_item]
 
   def show
     @top_10 = Item.topX(10)
@@ -20,6 +20,11 @@ class ListsController < ApplicationController
 
   def create
     @list = List.create(list_params)
+    redirect_to list_path @list
+  end
+
+  def update
+    @list.update!(list_params)
     redirect_to list_path @list
   end
 
@@ -47,7 +52,7 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name)
+    params.require(:list).permit(:name, :store_id)
   end
 
 end

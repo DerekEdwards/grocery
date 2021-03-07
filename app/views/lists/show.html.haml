@@ -1,7 +1,14 @@
 .div.text-center
+
   .row
     %h1
       =@list.name
+  .row 
+    .col-md-5
+    .col-md-2
+      =simple_form_for @list, id: 'store_form', url: list_path(@list), method: :patch do |f|
+        =f.input :store_id, collection: Store.all, include_blank: false, selected: @list.store.try(:id), label: false, input_html: {onchange: "this.form.submit()"}
+
   .row
     -if @list.active
       =link_to close_list_path(@list), method: :patch,  data: {confirm: "Are you sure you want to close this list?" } do
@@ -37,14 +44,16 @@
 
                 
       %br
-      -if @list.list_items.at_location(nil).count > 0
-        .row
-          .col-md-12
-            %h4
-              Location Unknown
-            // Items at this location
-            -@list.list_items.at_location(nil).each do |list_item|
-              =render partial: 'shared/listed_item', locals: {list_item: list_item}
+      %h3
+        Need to figure out out to show items not belonging to a location at this store
+      //-if @list.list_items.at_location(nil).count > 0
+      //  .row
+      //    .col-md-12
+      //      %h4
+      //        Location Unknown
+      //      // Items at this location
+      //      -@list.list_items.at_location(nil).each do |list_item|
+      //        =render partial: 'shared/listed_item', locals: {list_item: list_item}
     .col-md-3
       -if @list.active
         .row.text-center
@@ -78,7 +87,6 @@
             %i.fa.fa-plus
             ="Add Item"
       
-
 
 :css 
 
