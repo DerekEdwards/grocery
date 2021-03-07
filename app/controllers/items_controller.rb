@@ -3,11 +3,16 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :deactivate]
 
   def new
+    @list_id = allowed_params[:list_id] 
+    if @list_id
+      list = List.find(@list_id)
+      @locations = list.store.locations.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
+    else
+      @locations = Location.by_order.map{ |x| ["#{x.store.name}, #{x.name}: #{x.description}", x.id] }
+    end
     @item = Item.new 
-    @locations = Location.by_order.map{ |x| ["#{x.name}: #{x.description}", x.id] }
     @locations = [['Unknown', nil]] + @locations
     @placeholder = (allowed_params[:placeholder] || "").titleize
-    @list_id = allowed_params[:list_id]    
   end
 
   def create

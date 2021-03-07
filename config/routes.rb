@@ -28,6 +28,6 @@ Rails.application.routes.draw do
   resources :stores, only: [:new, :create, :index, :edit, :update]
 
   resources :list_items, only: [:edit, :update]
-
+  resources :item_locations, only: [:new, :create, :destroy]
 end
 
