@@ -9,13 +9,3 @@
         =link_to "Locations", locations_path
       %li
         =link_to "Stores", stores_path
-    %ul.nav.navbar-nav.pull-right
-      %li
-        .dropdown
-          %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
-            =@current_store
-          %ul.dropdown-menu
-            -Store.all.each do |store|
-              -unless store == @current_store
-                %li              
-                  =link_to store, make_current_store_path(store)

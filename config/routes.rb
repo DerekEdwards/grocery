@@ -26,11 +26,6 @@ Rails.application.routes.draw do
   end
 
   resources :stores, only: [:new, :create, :index, :edit, :update]
-  resources :stores do 
-    member do
-      get 'make_current'
-    end
-  end
 
   resources :list_items, only: [:edit, :update]
 

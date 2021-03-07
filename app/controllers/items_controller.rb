@@ -19,8 +19,6 @@ class ItemsController < ApplicationController
     unless tmp_location_id.blank?
       location = Location.find(tmp_location_id)
       @item.set_location(location) 
-    else
-      @item.unset_location @current_store
     end
 
     @item.save
@@ -47,8 +45,6 @@ class ItemsController < ApplicationController
     unless tmp_location_id.blank?
       location = Location.find(tmp_location_id)
       @item.set_location(location) 
-    else
-      @item.unset_location @current_store
     end
     
     @item.save

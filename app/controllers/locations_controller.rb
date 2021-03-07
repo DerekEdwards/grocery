@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
   end
 
   def index
-    @locations = @current_store.locations.by_order
+    @locations = Location.by_order
   end
 
   def update
