@@ -1,7 +1,7 @@
 .div.text-center
   .row 
     %h3
-      ="Edit #{@item.name}"
+      ="#{@item.name}"
 
     =simple_form_for @item, url: item_path(@item), method: :patch do |f|
       .col-md-4
@@ -11,6 +11,14 @@
           //= simple_fields_for :other do |o|
           //= f.input :tmp_location, collection: @locations, include_blank: false, selected: @item.get_location(@current_store).try(:id)
           =f.submit 
+
+  .row
+    %hr
+    %h4
+      ="#{@item.name} can be found in the following locations:"  
+    -@item.locations.each do |loc|
+      %i.fa.fa-shopping-cart
+      =link_to "#{loc.store.name}: #{loc.name}", edit_location_path(loc)
 
   -if @item.lists.count > 0
     .row

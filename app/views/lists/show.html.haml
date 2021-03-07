@@ -27,33 +27,31 @@
 
   .row
     .col-md-9
-      -@list.locations.by_order.uniq.each_slice(3) do |locs|
+      -@items_at_locs.each_slice(3) do |locs|
         .row
           -locs.each do |loc|
             .col-md-4
               // TITLE OF LOCATION 
-              -if loc.description
-                %h4="#{loc.name}: #{loc.description}"
+              -if loc[:location].description
+                %h4="#{loc[:location].name}: #{loc[:location].description}"
               -else
-                %h4=loc.name
+                %h4=loc[:location].name
               // Items at this location
-              -@list.item_locations.at_location(loc).each do |item_location|
-                -list_item = ListItem.find_by(item: item_location.item, list: @list)
+              -loc[:list_items].each do |list_item|
                 =render partial: 'shared/listed_item', locals: {list_item: list_item}
         %hr
 
                 
       %br
       %h3
-        Need to figure out out to show items not belonging to a location at this store
-      //-if @list.list_items.at_location(nil).count > 0
-      //  .row
-      //    .col-md-12
-      //      %h4
-      //        Location Unknown
-      //      // Items at this location
-      //      -@list.list_items.at_location(nil).each do |list_item|
-      //        =render partial: 'shared/listed_item', locals: {list_item: list_item}
+      -if @items_without_locs.count > 0
+        .row
+          .col-md-12
+            %h4
+              Location Unknown
+            // Items at this location
+            -@items_without_locs.each do |list_item|
+              =render partial: 'shared/listed_item', locals: {list_item: list_item}
     .col-md-3
       -if @list.active
         .row.text-center
