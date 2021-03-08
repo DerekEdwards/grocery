@@ -6,4 +6,5 @@
     .col-md-8
       .row
         =f.input :name, label: false
+        =f.input :store_id, collection: Store.all, include_blank: false
         =f.submit 
