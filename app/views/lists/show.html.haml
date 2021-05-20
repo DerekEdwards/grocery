@@ -64,14 +64,14 @@
             %ul#myUL
               -@items.order(:name).each do |item|
                 -if item.in? @list.items 
-                  =content_tag(:li, "data-name": item.name) do 
+                  =content_tag(:li, "data-name": ((item.in? @top_10) ? "#" : "") + item.name) do 
                     -if item.in? @top_10
                       %i.fa.fa-fire
                       =item.name
                     -else
                       =item.name
                 -else
-                  =content_tag(:li, "data-name": item.name) do 
+                  =content_tag(:li, "data-name": ((item.in? @top_10) ? "#" : "") + item.name) do 
                     %a{href: add_item_list_path(@list, item: item)} 
                       -if item.in? @top_10
                         %i.fa.fa-fire
